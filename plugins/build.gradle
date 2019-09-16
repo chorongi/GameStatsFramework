@@ -1,0 +1,71 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.spotbugs'
+apply plugin: 'application'
+
+application {
+    mainClassName = 'edu.cmu.cs.cs214.hw5.Main'
+}
+
+spotbugs {
+    toolVersion = '3.1.8'
+}
+
+test.testLogging {
+    exceptionFormat "full"; events "failed", "passed", "skipped"
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'org.ow2.asm:asm:6.2.1'
+        forcedModules = [ 'org.ow2.asm:asm:6.2.1' ]
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':framework')
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile group: 'org.knowm.xchart', name: 'xchart', version: '3.5.4'
+    compile 'org.jsoup:jsoup:1.11.3'
+}
+
+checkstyle {
+    ignoreFailures = true
+    toolVersion = "8.7"
+    sourceSets = [sourceSets.main]
+    configDir = file('config/checkstyle')
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.9'
+    }
+}
+
+// To generate an HTML report instead of XML
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports.xml.enabled = false
+    reports.html.enabled = true
+    ignoreFailures = true
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/reports/coverage")
+    }
+}

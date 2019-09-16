@@ -1,0 +1,5 @@
+# List of data plugins to be registered by framework.
+# Provide fully qualified class names here ( edu.cmu.cs.cs214.hw5.data.XXX ),
+# with one plugin per line.
+edu.cmu.cs.cs214.plugins.data.OPGGHtmlPlugin
+edu.cmu.cs.cs214.plugins.data.DotaAPIPlugin

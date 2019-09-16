@@ -1,0 +1,5 @@
+# List of display plugins to be registered by framework.
+# Provide fully qualified class names here ( edu.cmu.cs.cs214.hw5.display.XXX ),
+# with one plugin per line.
+edu.cmu.cs.cs214.plugins.display.RatingDisplayPlugin
+edu.cmu.cs.cs214.plugins.display.MatchDisplayPlugin
